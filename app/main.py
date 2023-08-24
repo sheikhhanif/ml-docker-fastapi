@@ -1,7 +1,6 @@
 #importing modules
 from fastapi import FastAPI
-from pydantic import BaseModel
-from app.model.vs_model import predict_sentiment
+from app.model.model import predict_sentiment
 
 # initiating fastapi instance
 app = FastAPI()
