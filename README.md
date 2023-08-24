@@ -2,6 +2,7 @@
 Deploying vaccine sentiment detection model using FastApi and Docker 
 
 # How to run
+From the terminal
 - clone the repo: git clone https://github.com/sheikhhanif/ml-docker-fastapi.git
 - build the docker image: docker build -t vaccine-app .
 - run: docker run -p 80:80 vaccine-app
