@@ -2,8 +2,8 @@ import os
 import pickle
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 
 def load_split_data():
@@ -15,16 +15,28 @@ def load_split_data():
 
 
 def train_evaluate_model():
+  # spliting data
   trainx, testx, trainy, testy = load_split_data()
-  tfidf = TfidfVectorizer(stop_words='english')
-  train_x_vector = tfidf.fit_transform(trainx)
-  svc = SVC(kernel='linear')
-  svc.fit(train_x_vector, trainy) 
-  test_x_vector = tfidf.transform(testx)
+
+  # building model pipeline
+  model_pipe = Pipeline([
+    ('tfidf', TfidfVectorizer(stop_words='english')),
+    ('clf', SVC(kernel='linear')),
+    ])
+  
+  # fitting the model
+  model_pipe.fit(trainx, trainy)
+
+  # testing for accuracy
   print('Accuracy Score')
-  print(svc.score(test_x_vector, testy))
-  with open('vaccine_sentiment_model-0.1.0.pkl', 'wb') as f:
-    pickle.dump(svc, f)
+  print(model_pipe.score(testx, testy))
+
+  # saving the model
+  with open('vaccine_sentiment_model.pkl', 'wb') as f:
+      pickle.dump(model_pipe, f) 
 
 
+# running the method
 train_evaluate_model()
+
+
