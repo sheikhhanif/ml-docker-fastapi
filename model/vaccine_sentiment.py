@@ -1,4 +1,5 @@
 import os
+import pickle
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -22,6 +23,8 @@ def train_evaluate_model():
   test_x_vector = tfidf.transform(testx)
   print('Accuracy Score')
   print(svc.score(test_x_vector, testy))
+  with open('vaccine_sentiment_model-0.1.0.pkl', 'wb') as f:
+    pickle.dump(svc, f)
 
 
 train_evaluate_model()
